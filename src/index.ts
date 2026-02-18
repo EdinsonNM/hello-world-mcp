@@ -2,6 +2,7 @@ import {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {z} from "zod";
 import {userTool} from "./tools/user";
+import { weatherTool } from "./tools/weather";
 
 const server= new McpServer({
     name: "demo-mcp",
@@ -32,6 +33,12 @@ server.registerTool(userTool.title,{
     description: userTool.description,
     inputSchema: userTool.inputSchema,
 },userTool.handler as any)
+
+server.registerTool(weatherTool.title, {
+    title: weatherTool.title,
+    description: weatherTool.description,
+    inputSchema: weatherTool.inputSchema,
+}, weatherTool.handler as any)
 
 server.connect(new StdioServerTransport()).then(() => {
     //console.log("MCP Server connected");
